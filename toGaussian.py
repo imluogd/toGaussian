@@ -49,6 +49,9 @@ for item in name_list:
         f.write(geom_list[index])
         f.write('\n\n')
 # now process prod.db
+name_list.clear()  # 清空两个含有min信息的列表
+geom_list.clear()
+
 print("now turn to PROD")
 prod_string = input("please enter the structure(PRODx) you want to process:")
 prod_list = prod_string.split(sep=',')
@@ -57,16 +60,13 @@ for item in prod_list:
     result_list2.append(item.strip())
 print(result_list2)
 
-name_list.clear()  # 清空两个含有min信息的列表
-geom_list.clear()
-
 conn = sqlite3.connect('prod.db')
 print("processing PR ...")
 cursur = conn.cursor()
 select_result = cursur.execute("SELECT name, geom FROM prod")
 for line in select_result:
     processed_name = (line[0]).split(sep="_")[0]
-    if processed_name in prod_list:
+    if processed_name in result_list2:
         name_list.append(processed_name)
         geom_list.append(line[1])
 
@@ -86,4 +86,36 @@ for item in name_list:
         f.write('0 1\n')
         f.write(geom_list[index])
         f.write('\n\n')
-# 一般要高精度计算的结构都会存在，就不提示没有了
+        
+name_list.clear()  # 清空两个含有PR信息的列表
+geom_list.clear()
+
+print("now turn to TS")
+ts_string = input("please enter the structure(TSx) you want to process:")
+ts_list = ts_string.split(sep=',')
+result_list3 = []
+for item in ts_list:
+    result_list3.append(item.strip())
+print(result_list3)
+
+conn = sqlite3.connect('ts.db')
+print("processing TS ...")
+cursur = conn.cursor()
+select_result = cursur.execute("SELECT name, geom FROM ts")
+for line in select_result:
+    processed_name = (line[0]).split(sep="_")[0]
+    if processed_name in result_list3:
+        name_list.append(processed_name)
+        geom_list.append(line[1])
+
+# print(name_list,geom_list)
+for item in name_list:
+    index = name_list.index(item)  # 我们处理到第几个了？
+    file_name = item+'.gjf'
+    with open(file_name, 'w+') as f:
+        f.write("# "+level+" opt freq(calcfc)\n")
+        f.write('\n')
+        f.write(item+'\n\n')
+        f.write('0 1\n')
+        f.write(geom_list[index])
+        f.write('\n\n')
