@@ -3,7 +3,7 @@ import re
 # 首先选择精度 CCSD(T)用orca?
 #print("please select calculation level :")
 # print("选择面板，需补充")
-level = "M06-2X/MG3S"
+level = "M06-2X/6-311+G(2df)"
 # dic={}精度字典,需要补充
 
 # 输入处理
@@ -42,7 +42,9 @@ for item in name_list:
     index = name_list.index(item)  # 我们处理到第几个了？
     file_name = item+'.gjf'
     with open(file_name, 'w+') as f:
-        f.write("# "+level+" opt freq(calcfc)\n")
+        f.write("%nprocshared=16\n%mem=40GB\n")
+        f.write("%chk=/gpfs/home/hfnl/luogd/g16/"+item+".chk\n")
+        f.write("#p "+level+" opt=calcfc freq\n")
         f.write('\n')
         f.write(item+'\n\n')
         f.write('0 1\n')
@@ -80,7 +82,9 @@ for item in name_list:
     index = name_list.index(item)  # 我们处理到第几个了？
     file_name = item+'.gjf'
     with open(file_name, 'w+') as f:
-        f.write("# "+level+" opt freq(calcfc)\n")
+        f.write("%nprocshared=16\n%mem=40GB\n")
+        f.write("%chk=/gpfs/home/hfnl/luogd/g16/"+item+".chk\n")
+        f.write("#p "+level+" opt=calcfc freq\n")
         f.write('\n')
         f.write(item+'\n\n')
         f.write('0 1\n')
@@ -113,7 +117,9 @@ for item in name_list:
     index = name_list.index(item)  # 我们处理到第几个了？
     file_name = item+'.gjf'
     with open(file_name, 'w+') as f:
-        f.write("# "+level+" opt freq(calcfc)\n")
+        f.write("%nprocshared=16\n%mem=40GB\n")
+        f.write("%chk=/gpfs/home/hfnl/luogd/g16/"+item+".chk\n")
+        f.write("#p "+level+" opt=(calcfc,ts) freq\n")
         f.write('\n')
         f.write(item+'\n\n')
         f.write('0 1\n')
