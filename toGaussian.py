@@ -119,7 +119,7 @@ for item in name_list:
     with open(file_name, 'w+') as f:
         f.write("%nprocshared=16\n%mem=40GB\n")
         f.write("%chk=/gpfs/home/hfnl/luogd/g16/"+item+".chk\n")
-        f.write("#p "+level+" opt=(calcfc,ts) freq\n")
+        f.write("#p "+level+" opt=(calcfc,ts,noeigen) freq\n")
         f.write('\n')
         f.write(item+'\n\n')
         f.write('0 1\n')
